@@ -21,6 +21,8 @@ def test_api():
     pytest.
     """
 
-    client = TestClient(app)
+    # Update the base URL for easy access
+    # across all the test suites.
+    client = TestClient(app, base_url="http://127.0.0.1:8000/")
 
     yield client  # use this client everytime

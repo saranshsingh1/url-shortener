@@ -19,6 +19,7 @@ def test_get_url_id():
     }
 
     assert get_url_id() not in test_db
+    assert isinstance(get_url_id(), str)
 
 
 def test_get_long_url_code():
@@ -36,6 +37,9 @@ def test_get_long_url_code():
 
     assert test_short_url_id == get_long_url_code(
         base_url=test_base_url, short_url=test_short_url
+    )
+    assert isinstance(
+        get_long_url_code(base_url=test_base_url, short_url=test_short_url), str
     )
 
 
