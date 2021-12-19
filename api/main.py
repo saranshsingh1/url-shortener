@@ -6,6 +6,8 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+from api.schema import DBShortLink, DBMainLink, URLSchema
+
 # Instantiate an instance of FastAPI.
 app = FastAPI()
 
@@ -23,6 +25,34 @@ async def home():
     """
 
     return {"message": "Hello World"}
+
+
+@app.post("/encode", response_model=DBShortLink, status_code=201)
+async def shorten_url(user_link: URLSchema):
+    """
+    API route that handles returning the shortened
+    version of the link provided by ``user_link``.
+    Args:
+        user_link (URLSchema): The URL provided by the user.
+    Returns:
+        JSONResponse: Shortened version of the original URL.
+    """
+
+    return {"shortened_url": user_link.url}
+
+
+@app.post("/decode", response_model=DBMainLink)
+async def original_url(user_link: URLSchema):
+    """
+    API route that handles returning the original
+    version of the short link provided by ``user_link``.
+    Args:
+        user_link (URLSchema): The short URL provided by the user.
+    Returns:
+        JSONResponse: Original version of the shortened URL.
+    """
+
+    return {"longer_url": user_link.url}
 
 
 @app.get("/url-coder", response_class=HTMLResponse)
