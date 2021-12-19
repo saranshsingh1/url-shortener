@@ -4,6 +4,8 @@ File contains all the API and HTML page related code.
 
 from typing import Optional
 
+import requests
+
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -35,7 +37,13 @@ async def shorten_url(user_link: URLSchema, request: Request):
 
     long_url: str = user_link.url
 
-    # TODO: Validate the long_url to be valid URL.
+    # check for the validity of the URL
+    # before proceeding further.
+    try:
+        # Timeout after 5 seconds instead of getting stuck
+        requests.get(url=long_url, timeout=5)
+    except Exception as error:
+        raise HTTPException(status_code=400, detail="Bad URL sent.") from error
 
     # Representation -> base_url = http://127.0.0.1:8000/
     base_url: URL = request.base_url

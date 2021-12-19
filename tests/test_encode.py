@@ -22,6 +22,24 @@ def test_get_shorten_url(test_api):
     assert response.json() == {"detail": "Method Not Allowed"}
 
 
+def test_bad_url(test_api):
+    """
+    Test to ensure request to the '/encode'
+    endpoint sending bad urls are handled
+    appropriately.
+    Args:
+        test_api: Client for making requests.
+    """
+
+    request_payload = {"url": "kajsdnkfaasd"}
+
+    response = test_api.post(url="/encode", json=request_payload)
+
+    assert response.status_code == 400
+    assert response.headers["Content-Type"] == "application/json"
+    assert response.json() == {"detail": "Bad URL sent."}
+
+
 def test_post_shorten_url(test_api, monkeypatch):
     """
     Test to make a valid POST request to the
