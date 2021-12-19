@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} My URL Shortener {% endblock %}
+
+{% block content %}
+    <h2> Check out my URL Shortener..</h2>
+    <label for="original-url"></label>
+    <input type="text" id="original-url" placeholder="Shorten/Get your link" autocomplete="off"
+           autocapitalize="none">
+    <button id="shorten-link">Shorten URL</button> <!-- shorten-link -->
+    <button id="original-link">Get original URL</button> <!-- original-link -->
+
+    <div id="short-url"></div> <!-- short-url -->
+    <div id="main-url"></div> <!-- main-url -->
+{% endblock content %}
+
+{% block javascript %}
+
+    <script type="text/javascript">
+
+    </script> <!-- shortener script -->
+
+{% endblock javascript %}
